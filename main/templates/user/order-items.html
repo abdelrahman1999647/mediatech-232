@@ -1,0 +1,45 @@
+
+
+
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="my-account">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-9">
+				<div class="table-responsive">
+					<table class="table-bordered table">
+						<thead>
+							<tr style="text-align: end; font-weight: bolder;">
+							    <th>الاجمالي</th>
+								<th>السعر</th>
+								<th>العدد</th>
+								<th>المنتج</th>
+								<th>رقم الفاتورة</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for item in orderitems %}
+							<tr style="text-align: end; font-weight: bolder;">
+								<td>{{item.total}} L.E</td>
+                                <td>{{item.price}} L.E</td>
+								<td>{{item.qty}}</td>							
+								<td>
+									<p><img src="{{item.image}}" width="80" /></p>
+									{{item.item}}
+								</td>
+								<td>{{item.invoice_no}}</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		<div class="col-md-3" >
+			{% include 'user/user-sidebar.html' %}
+		</div>
+	</div>
+</div>
+</div>
+{% endblock %}

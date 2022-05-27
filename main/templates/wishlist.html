@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+        
+        <!-- Wishlist Start -->
+        <div class="wishlist-page">
+            <div class="container-fluid">
+                <div class="wishlist-page-inner">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead class="thead-dark">
+                                        <tr style="text-align: end; font-weight: bolder;">
+                                            <th><i class="fa fa-shopping-cart"></i></th>
+                                            <th>السعر</th>
+                                            <th>المنتج</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="align-middle">
+                                        {% for wl in wlist %}
+                                        <tr >
+                                            <td >
+                                                <input type="hidden" value="1" class="form-control product-qty-{{wl.id}}" id="productQty" />
+                                                <input type="hidden" class="product-image-{{wl.id}}" value="{{wl.product.productattribute_set.first.image.url}}" />
+                                                <input type="hidden" class="product-id-{{wl.id}}" value="{{wl.id}}" />
+                                                <input type="hidden" class="product-title-{{wl.id}}" value="{{wl.product.title}}" />
+                                                <button class="btn-cart add-to-cart" data-index="{{wl.id}}"><i class="fa fa-shopping-cart"></i> اضف الى العربة</button>
+                                            </td>   
+                                            <td class="product-price-{{wl.id}}">{{wl.product.productattribute_set.first.price}}</td>
+                                            <td>
+                                                <div>
+                                                    <a href="/product/{{wl.product.slug}}/{{wl.product.id}}"><img src="{{wl.product.productattribute_set.first.image.url}}" width="60" height="55" alt="Image"></a>   
+                                                    <p>{{wl.product.title}}</p>                                             
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Wishlist End -->
+        
+        {% endblock content %}

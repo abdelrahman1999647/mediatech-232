@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+        
+
+        
+        <!-- Product List Start -->
+        <div class="product-view">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="row">
+				{% for product in data %}
+                            <div class="col-md-4">
+                                <div class="product-item">
+                                    <div class="product-title">
+                                        <a href="/product/{{product.slug}}/{{product.id}}">{{product.title}}</a>
+                                        <div class="ratting">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                        </div>
+                                    </div>
+                                    <div class="product-image">
+                                        <a href="/product/{{product.slug}}/{{product.id}}">
+                                            <img src="{{product.productattribute_set.first.image.url}}" alt="" height="320px">  
+                                        </a>
+                                        <div class="product-action">
+                                            <a class="btn add-to-cart" data-index="{{product.id}}"><i class="fa fa-cart-plus"></i></a>
+                                            <a class="btn add-wishlist" data-product="{{product.id}}"><i class="fa fa-heart"></i></a>
+                                            <a href="/product/{{product.slug}}/{{product.id}}"><i class="fa fa-search"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="product-price">
+                                        <h3 class="product-price-{{product.id}}">{{product.productattribute_set.first.price}}</h3> <h3>L.E</h3> 
+                                        <input type="hidden" value="1" class="form-control product-qty-{{product.id}}" id="productQty" />
+                                        <input type="hidden" class="product-image-{{product.id}}" value="{{product.productattribute_set.first.image.url}}" />
+                                        <input type="hidden" class="product-id-{{product.id}}" value="{{product.id}}" />
+                                        <input type="hidden" class="product-title-{{product.id}}" value="{{product.title}}" />
+                                        <a class="btn add-to-cart" data-index="{{product.id}}"><i class="fa fa-shopping-cart"></i>اضف الى العربه</a>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        
+                        <!-- Pagination Start -->
+                        <div class="col-md-12">
+                            {% if data.has_other_pages %}
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-center">
+                                    {% if data.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link " href="?page={{data.previous_page_number}}">Pervious</a>
+                                    </li>
+                                    {% else %}
+                                    <li class="page-item disabled"></li>
+                                    {% endif %}
+                                    {% for pages in data.paginator.page_range %}
+                                    {% if data.number == pages  %}
+                                    <li class="page-item ">
+                                        <a class="page-link" style="background-color:black ; color: #FF6F61; " href="#">{{pages}}</a>
+                                    </li>
+                                    {% else %}
+                                    <li class="page-item"><a class="page-link" href="?page={{pages}}">{{pages}}</a></li>
+                                    {% endif %}
+                                    {% endfor %}
+                                    {% if data.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{data.next_page_number}}">Next</a>
+                                    </li>
+                                    {% else %}
+                                        <li class="page-item disabled"></li>
+                                    {% endif %}
+                                </ul>
+                            </nav>
+                            {% endif %}
+                        </div>
+                        <!-- Pagination Start -->
+                    </div>                                             
+                    
+                    <!-- Side Bar Start -->
+                    <div class="col-lg-4 sidebar">
+                        <div class="sidebar-widget category">
+                            <h2 class="title" style="font-weight: bolder; margin-left:24.8rem ;color: #FF6F61;">الفئات</h2>
+                            <nav class="navbar bg-light">
+                                <ul class="navbar-nav">
+                                    {% if data %}
+			                        {% for cat in cat %}
+                                        <li class="nav-item" style="text-align: end; font-weight: bolder;">
+                                            <a class="nav-link" href="/category-product-list/{{cat.id}}">{{cat.title}}</a>
+                                        </li>
+                                    {% endfor %}
+                                    {% endif %}
+                                </ul>
+                            </nav>
+                        </div>
+                        
+                        <div class="sidebar-widget widget-slider">
+                            <div class="sidebar-slider normal-slider" style="width:350px ; margin-left: 100px;">
+                                {% for product in data %}
+                                <div class="product-item">
+                                    <div class="product-title">
+                                        <a href="/product/{{product.slug}}/{{product.id}}">{{product.title}}</a>
+                                        <div class="ratting">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                        </div>
+                                    </div>
+                                    <div class="product-image">
+                                        <a href="/product/{{product.slug}}/{{product.id}}">
+                                            <img src="{{product.productattribute_set.first.image.url}}" alt="" height="320px">
+                                        </a>
+                                        <div class="product-action">
+                                            <a class="btn add-to-cart" data-index="{{product.id}}"><i class="fa fa-cart-plus"></i></a>
+                                            <a class="btn add-wishlist" data-product="{{product.id}}"><i class="fa fa-heart"></i></a>
+                                            <a href="/product/{{product.slug}}/{{product.id}}"><i class="fa fa-search"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="product-price">
+                                        <h3 class="">{{product.productattribute_set.first.price}}</h3> <h3>L.E</h3> 
+                                        <a class="btn add-to-cart" data-index="{{product.id}}"><i class="fa fa-shopping-cart"></i>اضف الى العربه</a>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        
+                        <div class="sidebar-widget brands">
+                            <h2 class="title" style="text-align: end; color: #FF6F61 ; font-weight: bolder;">الماركات</h2>
+                            <ul>
+                                {% if data %}
+                                {% for brand in brand %}
+                                <li style="text-align: end; font-weight: bolder; "><a href="/brand-product-list/{{brand.id}}">{{brand.title}}</a></li>
+                                {% endfor %}
+                                {% endif %}
+                            </ul>
+                        </div>
+                        
+                    </div>
+                    <!-- Side Bar End -->
+                </div>
+            </div>
+        </div>
+        <!-- Product List End -->  
+        
+        <!-- Brand Start -->
+        <div class="brand">
+            <div class="container-fluid">
+                <div class="brand-slider">
+                    <div class="brand-item"><img src="img/brand-1.png" alt=""></div>
+                    <div class="brand-item"><img src="img/brand-2.png" alt=""></div>
+                    <div class="brand-item"><img src="img/brand-3.png" alt=""></div>
+                    <div class="brand-item"><img src="img/brand-4.png" alt=""></div>
+                    <div class="brand-item"><img src="img/brand-5.png" alt=""></div>
+                    <div class="brand-item"><img src="img/brand-6.png" alt=""></div>
+                </div>
+            </div>
+        </div>
+        <!-- Brand End -->
+        
+{% endblock %}

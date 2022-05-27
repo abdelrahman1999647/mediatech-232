@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="my-account">
+	<div class="container-fluid">
+		<div class="row">
+
+		<div class="col-md-9">
+			<div class="table-responsive">
+				<table class="table-bordered table">
+					<thead>
+						<tr style="text-align: end; font-weight: bolder;">							
+							<th>التقييم</th>
+							<th>التعليق</th>
+							<th>السعر</th>
+							<th>الصورة</th>
+							<th>اسم المنتج</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for review in reviews %}
+						<tr style="text-align: end; font-weight: bolder;">
+							<td>{{review.review_rating}}</td>
+                            <td>{{review.review_text}}</td>
+							<td>{{review.product.productattribute_set.first.price}} L.E</td>				
+							<td>
+								<img width="100" src="/media/{{review.product.productattribute_set.first.image}}" alt="{{review.product.title}}">
+							</td>
+							<td><a href="/product/{{review.product.slug}}/{{review.product.id}}">{{review.product.title}}</a></td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="col-md-3" >
+			{% include 'user/user-sidebar.html' %}
+		</div>
+	</div>
+</div>
+</div>
+{% endblock %}

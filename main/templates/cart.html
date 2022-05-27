@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- Cart Start -->
+<div class="cart-page" id="cartList">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-8">
+				<div class="cart-page-inner">
+					<div class="table-responsive">
+						<table class="table table-bordered">
+							<thead class="thead-dark">
+								<tr>
+									<th>تنشيط & حذف</th>
+									<th>الاجمالي</th>
+									<th>العدد</th>
+									<th>السعر</th>
+									<th>المنتج</th>
+								</tr>
+							</thead>
+							<tbody class="align-middle">
+								{% for product_id,item in cart_data.items %}
+								<tr>
+									<td>
+										<button class="delete-item" data-item="{{product_id}}"><i class="fa fa-trash "></i></button>
+										<button class="update-item" data-item="{{product_id}}"><i class="fa fa-sync "></i></button>
+									</td>
+									<td>{% widthratio item.price 1 item.qty %} L.E</td>
+									<td>
+										<div class="qty">
+											<button class="btn-minus"><i class="fa fa-minus"></i></button>
+											<input type="text" class="product-qty-{{product_id}}" value="{{item.qty}}">
+											<button class="btn-plus"><i class="fa fa-plus"></i></button>
+										</div>
+									</td>
+									<td>{{item.price}} L.E</td>
+									<td>
+										<div>
+											<a href="/product/{{item.title}}/{{product_id}}"><img src="{{item.image}}" alt="{{item.title}}" width="60" height="55" /> </a>
+											<p>{{item.title}}</p>
+										</div>
+									</td>
+								</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4">
+				<div class="cart-page-inner">
+					<div class="row">
+
+						<div class="col-md-12">
+							<div class="cart-summary">
+								<div class="cart-content">
+									<h1 style="text-align: end;"><span>{{total_amt}} L.E</span> : اجمالي السعر</h1>
+								</div>
+								<div class="cart-btn">		
+									{% if totalitems %}
+									<form action="/checkout" method="post">
+										{% csrf_token %}
+							
+										<div class="col-md-7" style="margin-left: auto;">
+											<label style="margin-left: 185px; font-weight: bolder;">الاسم</label>
+											<input type="text" class="form-control" placeholder="الاسم" style="text-align: end; font-weight: bolder;" name="name" required>
+										</div>
+										<div class="col-md-7" style="margin-left: auto;">
+											<label style="margin-left: 160px; font-weight: bolder;">رقم الهاتف</label>
+											<input type="text" class="form-control"  placeholder="رقم الهاتف" name="number" style="text-align: end; font-weight: bolder;" required>
+										</div>
+										<div class="col-md-7" style="margin-left: auto;">
+											<label style="margin-left: 180px; font-weight: bolder;">العنوان</label>
+											<input type="text" class="form-control"  placeholder="العنوان" name="address" style="text-align: end; font-weight: bolder;" required>
+										</div>
+									    
+									       <a href="/checkout" style="margin-left: 220px;" class=""><button>تاكيد الاوردر</button></a>
+										
+										<br>
+										<br>
+									
+									
+									</form>
+									
+									{% endif %}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Cart End -->
+
+{% endblock content  %}

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<main class="container my-4" id="cartList">
+	<!-- Featured Products -->
+	<div class="row">
+		<div class="col-md-9">
+			<h3 class="my-4 border-bottom text-right pb-1">عدد الاوردرات ({{totalitems}})</h3>
+		<table class="table table-bordered">
+		<thead class="thead-dark">
+			<tr style="text-align: end; font-weight: bolder;">
+			    <th >اجمالي</th>
+				<th >السعر</th>
+				<th >العدد</th>
+				<th >المنتج</th>
+			</tr>
+		</thead>
+		<tbody class="align-middle">
+			{% for product_id,item in cart_data.items %}
+			<tr style="text-align: end; font-weight: bolder;">
+				<td>{% widthratio item.price 1 item.qty %} L.E</td>
+				<td >{{item.price}} L.E</td>
+				<td class="qty" style="text-align: end;">
+					{{item.qty}}
+				</td>
+                <td >
+                    <div>
+                        <a href="/product/{{item.title}}/{{product_id}}"><img src="{{item.image}}" alt="{{item.title}}" width="60" height="55" /> </a>
+                        <p>{{item.title}}</p>
+                    </div>
+                </td>
+			</tr>
+			{% endfor %}
+		</tbody>
+		<tfoot>
+			<tr style="text-align: end; font-weight: bolder;">
+				<th>{{total_amt}} L.E</th>
+				<th>اجمالي الفاتورة</th>				
+                
+			</tr>
+			{% if totalitems %}
+			<tr>
+				<td colspan="4" align="left">
+					{{form.render}}
+				</td>
+			</tr>
+			{% endif %}
+		</tfoot>
+	</table>
+		</div>
+		
+	</div>
+</main>
+{% endblock %}
